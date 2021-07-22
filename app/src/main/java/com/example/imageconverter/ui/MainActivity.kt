@@ -6,13 +6,14 @@ import com.example.imageconverter.mvp.model.imageConverter.ImageConverter
 import com.example.imageconverter.mvp.model.uriConverter.UriConverter
 import com.example.imageconverter.mvp.presenter.MainPresenter
 import com.example.imageconverter.mvp.view.MainView
+import com.example.imageconverter.utils.AndroidSchedulers
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 
 class MainActivity : MvpAppCompatActivity(), MainView {
     private var vb: ActivityMainBinding? = null
     val presenter by moxyPresenter {
-        MainPresenter(ImageConverter(UriConverter()))
+        MainPresenter(AndroidSchedulers(), ImageConverter(UriConverter()))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +31,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         vb?.informTv?.text = "Преобразование завершено"
     }
 
-    private fun initStartBtn(){
+    private fun initStartBtn() {
         vb?.btnStart?.setOnClickListener {
             presenter.startConverting("path")
         }
